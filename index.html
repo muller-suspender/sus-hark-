@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Security Alert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
+      font-family: 'Segoe UI', sans-serif;
+      color: red;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .alert-box {
+      margin-top: 40px;
+      padding: 30px;
+      border: 3px solid red;
+      border-radius: 15px;
+      background: rgba(26, 0, 0, 0.9);
+      box-shadow: 0 0 25px red;
+      z-index: 2;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: red;
+      animation: blink 1s infinite;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    .scan-status {
+      font-size: 1.5rem;
+      margin-top: 25px;
+      color: yellow;
+    }
+
+    #countdown {
+      font-size: 2rem;
+      color: lime;
+      margin-top: 25px;
+    }
+
+    .data-box {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #111;
+      border: 2px dashed #f00;
+      border-radius: 10px;
+      color: #0f0;
+      display: none;
+    }
+
+    input, button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    input {
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    button {
+      background: crimson;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: darkred;
+    }
+
+    .extras {
+      margin-top: 35px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .extras a {
+      background: #444;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .extras a:hover {
+      background: #222;
+    }
+
+    .label {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 18px;
+      margin-top: 5px;
+      word-break: break-all;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Matrix Background -->
+  <canvas id="matrix"></canvas>
+
+  <!-- Background Sound -->
+  <audio autoplay loop>
+    <source src="https://www.soundjay.com/button/sounds/beep-07.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="alert-box">
+    <h1>⚠️ SUSPENDER SYSTEM ALERT ⚠️</h1>
+    <p>Suspender detect multiple securities.</p>
+    <p>Unauthorized remote access in progress by suspender.</p>
+    <div class="scan-status" id="status">Initializing scan...</div>
+    <div id="countdown"></div>
+
+    <div id="apiBox" class="data-box">
+      <div class="label">🫰API KEY GENERATOR</div>
+      <input type="text" id="apiInput" placeholder="Enter suspender master access ID">
+      <br>
+      <button onclick="generateKey()">Generate API Key</button>
+      <div class="value" id="apiResult"></div>
+    </div>
+
+    <div id="virusLinkBox" class="data-box">
+      <div class="label">🧪SUS-VIRUS DEPLOYMENT LINK:</div>
+      <div class="value">https://access-control.exe/trigger-virus</div>
+    </div>
+
+    <div class="extras">
+      <a href="https://whatsapp.com/channel/0029VaesBAXJJhzefVszDu3h" target="_blank">🔗 Join Channel</a>
+      <a href="https://wa.me/254705101667?text=Hello%20muller-tech%2C%20I%20want%20to%20contact%20you%20about%20the%20virus%20tool." target="_blank">💬 Contact Owner</a>
+      <a href="https://wa.me/254705101667?text=Hello%2C%20I'm%20here%20to%20report%20virus%20site%20has%20an%20error." target="_blank">⚠️ Report Error</a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Matrix Background
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas to full screen
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = '01☠️⚠️💀👾'.split('');
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = new Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 35);
+  </script>
+
+  <script>
+    let seconds = 10;
+    const status = document.getElementById("status");
+    const countdown = document.getElementById("countdown");
+    const apiBox = document.getElementById("apiBox");
+    const virusLinkBox = document.getElementById("virusLinkBox");
+    const apiInput = document.getElementById("apiInput");
+    const apiResult = document.getElementById("apiResult");
+
+    const logs = [
+      "Suspender Accessing system kernel...",
+      "Injecting binary payload...",
+      "Overriding firewall...",
+      "Reading credentials...",
+      "Encrypting user partition...",
+      "Disabling protection...",
+      "Uploading device logs...",
+      "Virus execution started"
+    ];
+
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < logs.length) {
+        status.textContent = logs[i];
+        i++;
+      } else {
+        clearInterval(interval);
+        status.textContent = "❌ Sus-Critical Error: Kernel breach detected";
+        countdown.textContent = "System lock in 10s...";
+        apiBox.style.display = "block";
+        startCountdown();
+      }
+    }, 1500);
+
+    function startCountdown() {
+      const timer = setInterval(() => {
+        seconds--;
+        countdown.textContent = `System lock in ${seconds}s...`;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          document.body.innerHTML = `
+            <h1 style="color:red;">☠️ SUS-DEVICE LOCKED ☠️</h1>
+            <p style="color:white;">ALL Suspender operations are now restricted.</p>
+          `;
+        }
+      }, 1000);
+    }
+
+    function generateKey() {
+      const inputVal = apiInput.value.trim();
+      if (inputVal !== "Muller") {
+        apiResult.innerHTML = "❌ Invalid Sus-master ID👀. Access Denied.";
+        return;
+      }
+      const generated = "api_" + Math.random().toString(36).substring(2, 10).toUpperCase();
+      apiResult.innerHTML = `✅ Key Generated: <span style="color:#0ff">${generated}</span>`;
+      virusLinkBox.style.display = "block";
+    }
+  </script>
+</body>
+</html>
